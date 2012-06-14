@@ -28,6 +28,10 @@ h3. href
 
 Override the source of the content. Optional in most cases, but required when opening pageslide programmatically (e.g. <code>$.pageslide({ href: '#some-element' });</code> ) (default=null)
 
+h3. easing
+
+By default, it uses 'linear'. But you can use your custom easing function from "this awesome easing library":http://gsgd.co.uk/sandbox/jquery/easing/.
+
 h2. Setup
 
 In the HEAD tag:
