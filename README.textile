@@ -28,6 +28,10 @@ h3. href
 
 Override the source of the content. Optional in most cases, but required when opening pageslide programmatically (e.g. <code>$.pageslide({ href: '#some-element' });</code> ) (default=null)
 
+h3. easing
+
+By default, it uses 'linear'. But you can use your custom easing function from "this awesome easing library":http://gsgd.co.uk/sandbox/jquery/easing/.
+
 h2. Setup
 
 In the HEAD tag:
@@ -74,3 +78,4 @@ h2. Support
 Basic support is offered through Github’s issues tracker. Many requests are resolved through the help of fellow PageSlide users and myself, however assistance is not guaranteed or timely.
 
 If you are in need of immediate support, or would like customizations to the script, "Premium Support":https://www.paypal.com/cgi-bin/webscr?business=scott@halobrite.com&cmd=_xclick&currency_code=USD&amount=17&item_name=jQuery%20PageSlide%20Premium%20Support is available for $17. Premium Support provides you with direct email access to me, and allows me to set time aside to help solve your problem quickly.
+
