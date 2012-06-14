@@ -56,7 +56,7 @@
     }
     
     // Function that controls opening of the pageslide
-    function _start( direction, speed ) {
+    function _start( direction, speed, easing ) {
         var slideWidth = $pageslide.outerWidth( true ),
             bodyAnimateIn = {},
             slideAnimateIn = {};
@@ -79,9 +79,9 @@
         }
                     
         // Animate the slide, and attach this slide's settings to the element
-        $body.animate(bodyAnimateIn, speed);
+        $body.animate(bodyAnimateIn, speed, easing);
         $pageslide.show()
-                  .animate(slideAnimateIn, speed, function() {
+                  .animate(slideAnimateIn, speed, easing, function() {
                       _sliding = false;
                   });
     }
@@ -122,7 +122,8 @@
         direction:  'right',    // Accepts 'left' or 'right'
         modal:      false,      // If set to true, you must explicitly close pageslide using $.pageslide.close();
         iframe:     true,       // By default, linked pages are loaded into an iframe. Set this to false if you don't want an iframe.
-        href:       null        // Override the source of the content. Optional in most cases, but required when opening pageslide programmatically.
+        href:       null,       // Override the source of the content. Optional in most cases, but required when opening pageslide programmatically.
+        easing:     'linear'    // Optional easing function
     };
 	
 	/*
@@ -138,12 +139,12 @@
         if( $pageslide.is(':visible') && $pageslide.data( 'direction' ) != settings.direction) {
             $.pageslide.close(function(){
                 _load( settings.href, settings.iframe );
-                _start( settings.direction, settings.speed );
+                _start( settings.direction, settings.speed, settings.easing );
             });
         } else {                
             _load( settings.href, settings.iframe );
             if( $pageslide.is(':hidden') ) {
-                _start( settings.direction, settings.speed );
+                _start( settings.direction, settings.speed, settings.easing);
             }
         }
         
@@ -155,6 +156,7 @@
         var $pageslide = $('#pageslide'),
             slideWidth = $pageslide.outerWidth( true ),
             speed = $pageslide.data( 'speed' ),
+            easing = $pageslide.data('easing'),
             bodyAnimateIn = {},
             slideAnimateIn = {}
             	        
@@ -173,8 +175,8 @@
                 break;
         }
         
-        $pageslide.animate(slideAnimateIn, speed);
-        $body.animate(bodyAnimateIn, speed, function() {
+        $pageslide.animate(slideAnimateIn, speed, easing);
+        $body.animate(bodyAnimateIn, speed, easing, function() {
             $pageslide.hide();
             _sliding = false;
             if( typeof callback != 'undefined' ) callback();
