@@ -32,6 +32,10 @@ h3. easing
 
 By default, it uses 'linear'. But you can use your custom easing function from "this awesome easing library":http://gsgd.co.uk/sandbox/jquery/easing/.
 
+h3. onLoadCallback
+
+Optional callback fired after it initially loads the content( only when `iframe` is set `false`. )
+
 h2. Setup
 
 In the HEAD tag:
