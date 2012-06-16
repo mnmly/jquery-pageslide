@@ -7,7 +7,7 @@
  *
  * Copyright (c) 2011 Scott Robbin (srobbin.com)
  * Dual licensed under the MIT and GPL licenses.
-*/ 
+*/
 ;(function($){
     // Convenience vars for accessing elements
     var $body = $('body'),
@@ -46,7 +46,10 @@
                 
                 $pageslide.html( iframe );
             } else {
-                $pageslide.load( url, callback );
+                $pageslide.load( url, function(){
+                  callback.apply(this, arguments);
+                  $pageslide.data('isLoaded', true);
+                } );
             }
             
             $pageslide.data( 'localEl', false );
@@ -123,7 +126,8 @@
         iframe:        true,         // By default, linked pages are loaded into an iframe. Set this to false if you don't want an iframe.
         href:          null,         // Override the source of the content. Optional in most cases, but required when opening pageslide programmatically.
         easing:        'linear',     // Optional easing function
-        onLoadCallback: function(){} // Optional onload callback when iframe is disabled
+        onLoadCallback: function(){}, // Optional onload callback when iframe is disabled
+        retainPage    : false        // Experioemtal: It will keep the DOM and will not replace the DOM.
     };
 	
 	/*
@@ -138,11 +142,15 @@
 	    // Are we trying to open in different direction?
         if( $pageslide.is(':visible') && $pageslide.data( 'direction' ) != settings.direction) {
             $.pageslide.close(function(){
-                _load( settings.href, settings.iframe, settings.onLoadCallback );
+                if ( !settings.retainPage || !$pageslide.data('isLoaded') ){
+                  _load( settings.href, settings.iframe, settings.onLoadCallback );
+                }
                 _start( settings.direction, settings.speed, settings.easing );
             });
         } else {                
-            _load( settings.href, settings.iframe, settings.onLoadCallback );
+            if ( !settings.retainPage || !$pageslide.data('isLoaded') ){
+              _load( settings.href, settings.iframe, settings.onLoadCallback );
+            }
             if( $pageslide.is(':hidden') ) {
                 _start( settings.direction, settings.speed, settings.easing);
             }
