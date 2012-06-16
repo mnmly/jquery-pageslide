@@ -7,8 +7,7 @@
  *
  * Copyright (c) 2011 Scott Robbin (srobbin.com)
  * Dual licensed under the MIT and GPL licenses.
-*/
-
+*/ 
 ;(function($){
     // Convenience vars for accessing elements
     var $body = $('body'),
@@ -27,7 +26,7 @@
     /*
      * Private methods 
      */
-    function _load( url, useIframe ) {
+    function _load( url, useIframe, callback ) {
         // Are we loading an element from the page or a URL?
         if ( url.indexOf("#") === 0 ) {                
             // Load a page element                
@@ -47,7 +46,7 @@
                 
                 $pageslide.html( iframe );
             } else {
-                $pageslide.load( url );
+                $pageslide.load( url, callback );
             }
             
             $pageslide.data( 'localEl', false );
@@ -118,12 +117,13 @@
      * Default settings 
      */
     $.fn.pageslide.defaults = {
-        speed:      200,        // Accepts standard jQuery effects speeds (i.e. fast, normal or milliseconds)
-        direction:  'right',    // Accepts 'left' or 'right'
-        modal:      false,      // If set to true, you must explicitly close pageslide using $.pageslide.close();
-        iframe:     true,       // By default, linked pages are loaded into an iframe. Set this to false if you don't want an iframe.
-        href:       null,       // Override the source of the content. Optional in most cases, but required when opening pageslide programmatically.
-        easing:     'linear'    // Optional easing function
+        speed:         200,          // Accepts standard jQuery effects speeds (i.e. fast, normal or milliseconds)
+        direction:     'right',      // Accepts 'left' or 'right'
+        modal:         false,        // If set to true, you must explicitly close pageslide using $.pageslide.close();
+        iframe:        true,         // By default, linked pages are loaded into an iframe. Set this to false if you don't want an iframe.
+        href:          null,         // Override the source of the content. Optional in most cases, but required when opening pageslide programmatically.
+        easing:        'linear',     // Optional easing function
+        onLoadCallback: function(){} // Optional onload callback when iframe is disabled
     };
 	
 	/*
@@ -138,11 +138,11 @@
 	    // Are we trying to open in different direction?
         if( $pageslide.is(':visible') && $pageslide.data( 'direction' ) != settings.direction) {
             $.pageslide.close(function(){
-                _load( settings.href, settings.iframe );
+                _load( settings.href, settings.iframe, settings.callback );
                 _start( settings.direction, settings.speed, settings.easing );
             });
         } else {                
-            _load( settings.href, settings.iframe );
+            _load( settings.href, settings.iframe, settings.callback );
             if( $pageslide.is(':hidden') ) {
                 _start( settings.direction, settings.speed, settings.easing);
             }
