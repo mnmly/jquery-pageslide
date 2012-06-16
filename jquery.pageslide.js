@@ -138,11 +138,11 @@
 	    // Are we trying to open in different direction?
         if( $pageslide.is(':visible') && $pageslide.data( 'direction' ) != settings.direction) {
             $.pageslide.close(function(){
-                _load( settings.href, settings.iframe, settings.callback );
+                _load( settings.href, settings.iframe, settings.onLoadCallback );
                 _start( settings.direction, settings.speed, settings.easing );
             });
         } else {                
-            _load( settings.href, settings.iframe, settings.callback );
+            _load( settings.href, settings.iframe, settings.onLoadCallback );
             if( $pageslide.is(':hidden') ) {
                 _start( settings.direction, settings.speed, settings.easing);
             }
